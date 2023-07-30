@@ -6,9 +6,20 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tunio = "0.3.0"
+tunio = { version = "0.3.0", features = ["async-tokio"] }
 tokio = { version = "1.19.2", features = ["full"] }
 etherparse = "0.13.0"
 futures = "0.3.28"
-env_logger = "0.10.0"
 netconfig = "0.4.0"
+simple_wintun = { git = "https://github.com/xutianyi1999/SimpleWintun.git" }
+wintun = "0.2.1"
+winapi = { version = "0.3", features = ["synchapi", "winbase", "winerror", "ipexport", "iphlpapi", "handleapi"] }
+env_logger = "0.8"
+# winapi = { version = "0.3", features = ["netioapi", "iptypes", "iphlpapi", "nldef"] }
+packet = "0.1.4"
+pcap-file = "1.1.1"
+subprocess = "0.2.7"
+widestring = "0.4"
+log = "0.4"
+rand = "0.8.3"
+itertools = "0.10.1"
