@@ -4,23 +4,23 @@ use std::thread;
 
 // use futures::channel::mpsc::{Sender, self};
 
-pub(crate) struct ThreadPool {
+pub(crate) struct _ThreadPool {
     threads: Vec<thread::JoinHandle<()>>,
-    sender: Sender<Message>,
+    sender: Sender<_Message>,
 }
 
-type Job = Box<dyn FnOnce() + Send + 'static>;
+type _Job = Box<dyn FnOnce() + Send + 'static>;
 
-enum Message {
-    NewJob(Job),
+enum _Message {
+    NewJob(_Job),
     Terminate,
 }
 
-impl ThreadPool {
+impl _ThreadPool {
     /// 创建线程池。
     ///
     /// `size`是线程池中的线程数。
-    pub fn new(size: usize) -> ThreadPool {
+    pub fn _new(size: usize) -> _ThreadPool {
         assert!(size > 0);
 
         let (sender, receiver) = mpsc::channel();
@@ -38,11 +38,11 @@ impl ThreadPool {
                     Ok(msg) => {
                       // ...
                       match msg {
-                        Message::NewJob(job) => {
+                        _Message::NewJob(job) => {
                             println!("Handling job in worker thread");
                             job();
                         }
-                        Message::Terminate => break,
+                        _Message::Terminate => break,
                     }
 
                     },
@@ -57,15 +57,15 @@ impl ThreadPool {
             }));
         }
 
-        ThreadPool { threads, sender }
+        _ThreadPool { threads, sender }
     }
 
     /// 执行一个任务
-    pub fn execute<F>(&self, f: F)
+    pub fn _execute<F>(&self, f: F)
     where
         F: FnOnce() + Send + 'static, 
     {
         let job = Box::new(f);
-        self.sender.send(Message::NewJob(job)).unwrap();
+        self.sender.send(_Message::NewJob(job)).unwrap();
     }
 }

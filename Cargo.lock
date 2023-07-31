@@ -1084,6 +1084,7 @@ dependencies = [
  "etherparse",
  "futures",
  "itertools",
+ "libloading",
  "log",
  "netconfig 0.4.0",
  "packet",

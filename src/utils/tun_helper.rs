@@ -22,22 +22,10 @@ use super::udp_pool::UdpPoolTrxInfo;
  * 创建并启动tun设备， 返回Arc<Mutex<Interface>>
  */
 static RUNNING: AtomicBool = AtomicBool::new(true);
-pub fn create_and_up_tun(mut 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    : PduSessionEstablishmentAcceptMsg)  {
+pub fn create_and_up_tun(mut pduData: PduSessionEstablishmentAcceptMsg)  {
     // let mut interface_config = DefaultDriver::if_config_builder();
     // let mut driver = DefaultDriver::new().unwrap();
+    // 创建进程间通信的通道
     // udp_to_tun_tx是UDP的发送端，发送数据到TUN， udp_to_tun_rx是UDP设备的接收端，接受来自TUN的数据
     let (udp_to_tun_tx, udp_to_tun_rx) = std::sync::mpsc::channel::<Vec<u8>>();
     
@@ -48,36 +36,10 @@ pub fn create_and_up_tun(mut
     //     .unwrap();
     // let interface_config = interface_config.build().unwrap();
     // let interface: Arc<Mutex<Interface>>= Arc::new(Mutex::new(crate::DefaultInterface::new_up(&mut driver, interface_config).unwrap()));
-    let (reader, writer, wintun_index) = test(p
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        duData.dnn.dnn_to_string().clone()).unwrap();
+    let (reader, writer, wintun_index) = test(pduData.dnn.dnn_to_string().clone()).unwrap();
     // let send_to_udp_sender:Arc<Mutex<Interface>> = interface.clone();
     // let read_from_tun =interface.clone();
-    set_all(wintun_index,
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    );
+    set_all(wintun_index,pduData);
     let _udp_to_tun = std::thread::spawn(move || {
         let mut udp_pool_trx_info = UdpPoolTrxInfo::new();
 

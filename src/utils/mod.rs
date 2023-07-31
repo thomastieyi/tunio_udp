@@ -1,3 +1,12 @@
 pub(crate) mod thread_pools;
 pub(crate) mod tun_helper;
+pub(crate) mod tun_helper_wintun;
 pub(crate) mod udp_pool;
+pub(crate) mod nas_pdu_helper;
+pub(crate) mod nas_pdu_tlv_decoder;
+pub(crate) mod pdu;
+pub(crate) mod tlv_ext_decoder;
+pub(crate) mod route_helper;
+pub(crate) mod nr_cp_handler;
+pub(crate) mod route_cmd;
+pub(crate) mod tun_thrpt_util;

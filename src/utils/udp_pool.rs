@@ -1,10 +1,11 @@
-use std::net::ToSocketAddrs;
-use std::net::UdpSocket;
-use std::sync::Arc;
-use std::sync::Mutex;
-use std::{net::IpAddr, sync::mpsc::Receiver, sync::mpsc::Sender, thread::JoinHandle};
 
-pub struct UdpPool {
+use std::net::{UdpSocket, IpAddr};
+
+use std::{ sync::mpsc::Receiver, sync::mpsc::Sender, thread::JoinHandle};
+
+use log::debug;
+
+pub struct _UdpPool {
     local_port: u32,
     remote_addr: IpAddr,
     remote_port: u32,
@@ -38,11 +39,11 @@ impl UdpPoolTrxInfo {
             let sener_a = sender.clone();
             let _udp_rx_pool_item = std::thread::spawn(move || {
                 let socket = UdpSocket::bind(format!("0.0.0.0:{}", local_port)).unwrap();
-    
+                debug!("UDP downlink receiver listening @ 0.0.0.0:{}", local_port);
                 loop {
     
                     let mut buf = [0; 4096];
-                    let (amt, src) = socket.recv_from(&mut buf).unwrap();
+                    let (amt, _src) = socket.recv_from(&mut buf).unwrap();
     
                     let data = &mut buf[..amt];
     
@@ -59,11 +60,11 @@ impl UdpPoolTrxInfo {
     }
 }
 
-impl UdpPool {
+impl _UdpPool {
     // 创建UDP池
 
-    pub fn new(&mut self, local_port: u32, remote_addr: IpAddr, remote_port: u32) -> UdpPool {
-        UdpPool {
+    pub fn _new(&mut self, local_port: u32, remote_addr: IpAddr, remote_port: u32) -> _UdpPool {
+        _UdpPool {
             local_port: local_port,
             remote_addr: remote_addr,
             remote_port: remote_port,
