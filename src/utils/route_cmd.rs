@@ -31,7 +31,7 @@ impl RouteCmd {
     }
 }
 
-pub fn set_all(wintun_adapter_index : u32, mut pud_data: PduSessionEstablishmentAcceptMsg) {
+pub fn set_all(wintun_adapter_index : u32, pud_data: &mut PduSessionEstablishmentAcceptMsg) {
     //根据pduData更新ip地址
     let mut interface_address: IpAddr = "192.168.4.2".parse().unwrap();
     let interface_prefix_length = 24;

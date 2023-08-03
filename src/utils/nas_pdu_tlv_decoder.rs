@@ -1,4 +1,4 @@
-use log::debug;
+use log::{debug, info};
 
 use crate::{
     utils::pdu::PduAddressType,
@@ -64,6 +64,7 @@ pub fn tlv_decode_pdu_session_establishment_accept(
     let mut index: usize = 0;
     let mut res: nas_pdu_helper::PduSessionEstablishmentAcceptMsg =
     nas_pdu_helper::PduSessionEstablishmentAcceptMsg::new();
+    info!("{:#?}", data);
     //decode extended_protocol_discriminator
     index += 1;
     //decode_pdu_session_identity

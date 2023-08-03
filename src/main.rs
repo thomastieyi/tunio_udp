@@ -47,7 +47,8 @@ async fn main() {
         match stream {
             Ok(stream) => {
                 info!("New client connection: {}", stream.peer_addr().unwrap());
-                std::thread::spawn(|| _handle_nr_network_if_mgmt_handler(stream));
+                std::thread::Builder::new()
+                .stack_size(400 * 1024 * 1024).spawn(|| _handle_nr_network_if_mgmt_handler(stream));
             }
             Err(e) => {
                 error!("Error: {}", e);
